@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Generator</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header-banner">
+            <img src="image/alarm-clock-white.png" alt="Alarm"><h2>WakeMeUp - Automated Monitoring Python Script Generator</h2>
+        </div>
+        <div id="main" class="clearfix">
+
+            <div id="sidebar">
+                <p>
+                    <!-- <a href="#" onclick="showInfoPage()" style="display: inline-block; text-indent: 20px;">Home</a><br> -->
+                    <!-- <a href="#" onclick="showFormPage()" style="display: inline-block; text-indent: 20px;">Input Form</a> -->
+                    <a href="#" onclick="showInfoPage()" class="sidebar-button">Home</a>
+                    <a href="#" onclick="showFormPage()" class="sidebar-button">Input Form</a>
+                </p>
+            </div>
+            <div id="bodyarea" class="clearfix">
+
+                <!-- Instruction Page -->
+
+                <div id="info-area">
+                <!-- <div id="info-area" class="d-none"> -->
+                    <p style="font-weight: bold;">Instructions to use this tool:</p>
+                        <p style="text-indent: 20px; margin-bottom: 0;">This Tool is intended for IBM users only.</p>
+                        <p style="text-indent: 20px; margin-bottom: 0;">This Tool generates a python script to monitor Jobs scheduled in Oracle Database.</p>
+                        <p style="text-indent: 20px; margin-bottom: 0;">If any abnormalities observed in the jobs a call will be initiated to support person in their Mobile Number.</p>
+                        <p style="text-indent: 40px; margin-bottom: 0;">Calls will be initiated for the below scenarios.</p>
+                        <p style="text-indent: 50px; margin-bottom: 0;">If Job is <b>Disabled</b>.</p>
+                        <p style="text-indent: 50px; margin-bottom: 0;">If Job <b>Not Started</b> as per the scheduled start time.</p>
+                        <p style="text-indent: 50px; margin-bottom: 0;">If Job is running more than <b>Expected Duration</b>.</p>
+                        <p style="text-indent: 50px; margin-bottom: 0;">If Job is <b>Failed</b>.</p>
+                        <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">Please install Python vesrsion "3.x" in the server from which you are going to monitor the Jobs.</p>
+                        <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0;">Download Python from <a href="https://www.python.org/downloads/" target="_blank">here</a>, as per your Operating System.</p>
+                        <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">Install below dependent libraries in the monitoring server in order to run the Python script successfully.</p>
+                        <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0; font-family: 'Courier New', Courier, monospace;">pip install cx_Oracle</p>
+                        <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0; font-family: 'Courier New', Courier, monospace;">pip install sqlite3</p>
+                        <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0; font-family: 'Courier New', Courier, monospace;">pip install smtplib</p>
+                        <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">Ports between monitoring server and Database server should be opened to connect the Database.</p>
+                        <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">From Monitoring server organization's smtp connectivity should be opened.</p>
+                        <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">Calls will be initiated from <a href="https://ibm.pagerduty.com" target="_blank">IBM PagerDuty</a> Tool. Follow the below steps to complete PagerDuty prerequisites.</p>
+                        <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0;">Get access to PagerDuty tool and configure your mobile number in it. Please <a href="docs/PagerDuty Onboarding Process.pdf" target="_blank">Download</a> this OnBoarding Process guide for instructions.</p>
+                        <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0;">Create PagerDuty email address. <a href="PagerDuty_Access.pdf">Download</a> this guide for instructions.</p>
+                        
+
+
+
+                    
+                </div>
+
+                <!-- Initial Form to get System Type -->
+
+                <div id="form1area" class="d-none">
+                    
+                    <form id="montype">
+
+                        <label>Type of Monitoring</label>
+
+                        <select id="mon_type" onchange="enableSystype(this.value)" required style="background-color: lightyellow;">
+                            <option value=""></option>
+                            <option value="dbjob">Database Job Monitor</option>
+                            <!-- <option value="logfile">Logfile Monitor</option> -->
+                        </select>
+
+                    </form>
+
+                    <!-- Database Type Form -->
+
+                    <div id="dbtype" class="d-none">
+
+                        <form id="db">
+
+                            <label>Select Database Type</label>
+
+                            <select id="db-type" onchange="enableDBinfo(this.value)" required style="background-color: lightyellow;">
+                                <option value=""></option>
+                                <option value="oracle">Oracle</option>
+                                <!-- <option value="sql">SQL Server</option> -->
+                                <!-- <option value="sql">DB2</option> -->
+                            </select>
+
+                        </form>
+
+                    </div>
+
+                    <div id="existDb" class="d-none" style="left: 0%;">
+                        <form id="existDbInfo">
+                          <br>
+                          <p>Please choose Existing Database or New Database</p>
+                          <br>
+                          <input type="radio" id="option1" name="dbRadioGroup" value="existingDb" style="width: 20%; display: inline-block;">
+                          <label for="option1" style="width: 10%; display: inline-block;">Existing</label>
+                          
+                          <input type="radio" id="option2" name="dbRadioGroup" value="newDb" style="width: 20%; display: inline-block;">
+                          <label for="option2" style="width: 10%; display: inline-block;">New</label>
+                        </form>
+                      </div>
+                    
+                    <div id="showExistDb" class="d-none">
+                        <p>Existing Database:</p><ul id="data-list"></ul>
+                    </div>
+
+                    <!-- Database info form -->
+
+                    <div id="dbinfo" class="d-none">
+
+                        <form id="db-info">
+
+                            <label>Enter Database IP or Hostname</label>
+                            <input type="text" id="dbhost" required>*
+                            <br>
+                            <label>Enter Database Port</label>
+                            <input type="number" id="dbport" required>*
+                            <br>
+                            <label>Enter Database Name / Service Name</label>
+                            <input type="text" id="dbname" required>*
+                            <br>
+                            <label>Enter Database User Name</label>
+                            <input type="text" id="dbuname" required>*
+                            <br>
+                            <label>Enter Database Password</label>
+                            <input type="password" id="dbpass" required>*
+                            <br>
+                            <div style="text-align: right;">
+                                <button type="button" id="dbinfo-nxt" onclick="dbinfoNxtAction()">Next</button>
+                            </div>
+                            <p id="dbMandateErrorText" style="color: red; display: none; text-align: right;">Please fill all mandatory fields.</p>
+                        </form>
+
+                    </div>
+
+
+
+                    <!-- Logfile Monitor info Form -->
+
+                    <div id="sysinfo" class="d-none">
+
+                        <form id="sys-info">
+
+
+                                <label>Enter Server IP or Hostname</label>
+                                <input type="text" id="sysip">
+                                <br>
+                                <label>Enter Logfile Path</label>
+                                <input type="text" id="logpath">
+                                <br>
+                                <label>Enter Logfile Name</label>
+                                <input type="text" id="logfilename">
+                                <br>
+                                <label>Enter Error Search keywords</label>
+                                <input type="text" id="errtxt">
+                                <br>
+                                <div style="text-align: right;">
+                                    <button type="button" id="logfile-add" onclick="enablesystbl()">Add</button>
+                                </div>
+
+                        </form>
+
+                    </div>
+
+                    
+
+                </div>
+
+                    <!-- Job Details form after getting DB info -->
+
+                    <div id="form2area" class="d-none">
+                    <!-- <div id="form2area"> -->
+                        
+                        <form id="db-job-info">
+                        
+                            <label>Enter Job Name</label>
+                            <input type="text" id="jobName" required>*
+                            <br>
+                            <label>Enter Job Frequency Type</label>
+                            <select id="jobFreqType" class="sch-pick-intrvl" onchange="enablefreqtype(this.value)" required style="background-color: lightyellow;">
+                                <option value=""></option>
+                                <option value="minutely">Minute Interval</option>
+                                <option value="hourly">Hourly</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <!-- <option value="monthly">Monthly</option> -->
+                                <!-- <option value="custom">Custom</option> -->
+                                <!-- <option value="hr">Yearly</option> -->
+                            </select>*
+                            <br>
+
+                        </form>
+
+                        <div id="min-freq" class="d-none">
+                        <!-- <div id="min-freq"> -->
+
+                            <form id="min-freq-form">
+
+                                <label>Enter Job Start Time</label>
+                                <input type="time" id="jobMinStartTime" required>*<br>
+
+                                <label>Enter Repeat Interval</label>Every 
+                                <input type="number" id="minReptIntrvl" style="width: 50px;" min="5" required> Min(s)*
+                                <p id="minReptErrorText" style="color: red; display: none;">Minumum interval should be greater than or equal to 5 Mins.</p><br>
+
+                                <label>Enter Acceptable Duration of Job</label>
+                                <input id="jobDurnMin" type="number" style="width: 50px;" min="0" required> Min(s)*
+
+                                
+
+                            </form>
+
+                        </div>
+
+                        <div id="hourly-freq" class="d-none">
+
+                            <form id="hourly-freq-form">
+
+                                <label>Enter Job Start Time</label>
+                                <input type="time" id="jobHlyStartTime" required>*<br>
+
+                                <label>Enter Repeat Interval</label>Every 
+                                <!-- <div id="selectContainer"></div> -->
+
+                                <select id="hlyReptIntrvl" style="width: 50px;" required></select> Hr(s)*<br>
+                                <p id="minReptErrorText" style="color: red; display: none;">Minumum interval should be greater than or equal to 1 Hr. Maximum will be 23 Hrs</p>
+
+                                <label>Enter Acceptable Duration of Job</label>
+                                <input id="job-durn-hr" type="number" class="sch-pick-no" required disabled> Hr
+                                <input id="jobDurnHrlyMin" type="number" class="sch-pick-no" min="0" required> Min*
+
+
+                            </form>
+
+                        </div>
+
+                        <div id="daily-freq" class="d-none">
+
+                            <form id="daily-freq-form">
+
+                                <label>Enter Job Start Time</label>
+                                <input type="time" id="jobDlyStartTime" required>*<br>
+                                    
+                                <label>Enter Acceptable Duration of Job</label>
+                                <select id="jobDurnDlyHr" style="width: 50px;" required></select> Hr(s)
+
+                                <input id="jobDurnDlyMin" type="number" class="sch-pick-no" min="0" required> Min(s)*<br>
+                                <!-- <input id="job-durn-hr" type="number" class="sch-pick-no" required> Hr -->
+                                <!-- <input id="job-durn-min" type="number" class="sch-pick-no" required> Min -->
+
+                            </form>
+
+                        </div>
+                                
+                                
+                        <div id="weekly-freq" class="d-none">
+
+                            <form id="weekly-freq-form">
+
+                                <label>Enter Day of the week</label>
+                                <select id="weekdaySelect"></select><br>
+
+                                <label>Enter Job Start Time</label>
+                                <input type="time" id="jobWklyStartTime" required><br>
+                                    
+                                <label>Enter Acceptable Duration of Job</label>
+                                <select id="jobDurnWklyHr" style="width: 50px;" required></select> Hr(s)
+
+                                <input id="jobDurnWklyMin" type="number" class="sch-pick-no" min="0" required> Min(s)*
+
+                            </form>
+
+                        </div>
+
+                        <div style="text-align: right;">
+                            <button type="button" id="resetJobInfoForm" onclick="clrJobInput()">Reset</button>
+                            <button type="button" id="jobinfo-add" onclick="addJobToTbl()">Add</button>
+                            <!-- <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script> -->
+                            <!-- <script src="https://unpkg.com/file-saver"></script> -->
+                            <!-- <p>For Bulk upload please download Excel file (.xlsx) template. </p> -->
+                            <!-- <button>Download</button> -->
+                            
+                        </div>
+                        <p id="minMandateErrorText" style="color: red; display: none; text-align: right;">Please fill all mandatory fields.</p>
+
+                            
+                        
+                        <p style="font-size: small; font-style: italic;">* Mandatory Fields</p>
+                    </div>
+
+
+
+            <!-- Show Job Details in a Table after getting Job info -->
+
+            <div id="temp-area" class="d-none">
+
+                <label for="jobInput">Job Name:</label>
+                <input type="text" id="jobInput" placeholder="Enter job name">
+                
+                <label for="scheduleSelect">Schedule Type:</label>
+                <select id="scheduleSelect">
+                <option value=""></option>
+                <option value="daily">Daily</option>
+                <option value="hourly">Hourly</option>
+                <option value="weekly">Weekly</option>
+                <option value="weekly">Monthly</option>
+                <option value="custom">Custom</option>
+                </select>
+                
+                <label for="timeInput">Job Time:</label>
+                <input type="time" id="timeInput" disabled>
+
+                <label for="customHoursInput">Custom Hours:</label>
+                <input type="number" id="customHoursInput" placeholder="Enter hours" style="display: none;" disabled>
+
+                <label for="daySelect">Select Day:</label>
+                <select id="daySelect" style="display: none;" disabled>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+                </select>
+
+                <button onclick="scheduleJob()">Schedule Job</button>
+
+                <ul id="jobList"></ul>
+
+
+            </div>
+
+            <!-- Job List Table -->
+            <div id="jobdet-area" class="d-none">
+
+            </div>
+
+            <div id="pynext-area" class="d-none" style="text-align: right;">
+                <button type="button" id="dwnldCsv" onclick="downldcsv()">Download CSV</button>
+                <button type="button" id="pyNext" onclick="pyNext()">Next</button>
+                
+            </div>
+
+            <!-- Show Logfile Details in a Table after getting Logfile info -->
+
+            <div id="logdet-area" class="d-none">
+
+                <table id="loglist">
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Server IP / Hostname</th>
+                        <th>Logfile Path</th>
+                        <th>Logfile Name</th>
+                        <th>Error Search Text</th>
+                    </tr>
+                </table>
+                
+            </div>
+
+            <div id="pyinfo-area"  class="d-none">
+            <!-- <div id="pyinfo-area"> -->
+
+                <form id="pyinfo">
+
+                    <!-- <label>Enter the Path in which Python is installed</label><br>
+                    <input type="text" id="pyPath" style="width: 800px;" placeholder="/usr/bin/python" required>*
+                    <p style="color: red; font-size: small; ">To get the Path login to server and type "which python"</p>
+                    <br>
+
+                    <label class="full-width">Enter the Path in which Monitoring script to be placed</label><br>
+                    <input type="text" id="pyPath" style="width: 800px;" placeholder="/home/user/" required>*
+                    <p style="color: red; font-size: small; ">Monitoring script will be executed from this path</p>
+                    <br>
+
+                    <label class="full-width">Provide Name for the Monitoring Script</label><br>
+                    <input type="text" id="pyPath" style="width: 400px;" placeholder="dbjobmon.py" required>*
+                    <p style="color: red; font-size: small; ">This Name will be called from cron</p>
+                    <br> -->
+
+                    <label style="display: inline-block;">Enter smtp server name or IP:</label>
+                    <input type="text" id="smtpHost" style="width: 400px;" required>*
+                    <br>
+
+                    <label style="display: inline-block;">Enter smtp port:</label>
+                    <input type="text" id="smtpPort" style="width: 400px;" required>*
+                    <br>
+
+                    <label style="display: inline-block;">Enter smtp Username:</label>
+                    <input type="text" id="smtpUname" style="width: 400px;" required>*
+                    <br>
+
+                    <label style="display: inline-block;">Enter smtp Password:</label>
+                    <input type="password" id="smtpPswd" style="width: 400px;" required>*
+                    <br>
+
+                    <label style="display: inline-block;">Enter from email address:</label>
+                    <input type="text" id="fromEmail" style="width: 400px;" required>*
+                    <br>
+
+                    <label style="display: inline-block;">Enter PagerDuty email address:</label>
+                    <input type="text" id="pDtyEmail" style="width: 400px;" required>*
+                    <br>
+
+                    <label style="display: inline-block;">Enter support person's email address:</label>
+                    <input type="text" id="toEmail" style="width: 400px;" required>*
+                    <p style="color: red; font-size: small; text-align: right;">Multiple emails should be , separated</p>
+                    <br>
+
+                </form>
+
+                <div id="genpy-area">
+                    <button type="button" id="pyGen" class="bottom-center-button" onclick="generatePyFile()">Generate Monitoring Script</button>
+                </div>
+                <br>
+
+                <div id="final-info-area">
+                    <p><b>Final Instruction:</b></p>
+                    <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">Place the generated python script <b>ora_db_job_mon.py</b> in the Monitoring server at a desired location.</p>
+                    <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">Execute the below command to run the script.</p>
+                    <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0; font-family: 'Courier New', Courier, monospace;">python ora_db_job_mon.py</p>
+                    <p style="text-indent: 20px; margin-top: 0; margin-bottom: 0;">If the execution is successful, schedule this script to run every 5 mins.</p>
+                    <p style="text-indent: 40px; margin-top: 0; margin-bottom: 0;">Use Windows Scheduler if it is windows environment or Crontab if it is Linux environment.</p>
+
+                </div>
+
+                
+
+            </div>
+
+            </div>
+
+            
+
+        </div>
+
+    </div>
+
+    <script src="script.js"> </script>
+
+</body>
+</html>

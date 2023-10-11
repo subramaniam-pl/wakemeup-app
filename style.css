@@ -1,0 +1,385 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+
+*
+{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Helvetica;
+}
+
+#wrapper
+{
+  width: 100%;
+  margin: auto;
+  background-color: white;
+}
+
+#header-banner
+{
+  width: 100%;
+  min-height: 100px;
+  background-color:black;
+  color:antiquewhite;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 100px;
+  /* margin-bottom: 5px; */
+  /* padding: 10px;  */
+}
+
+#header-banner img
+{
+  
+  float: left;
+  width: auto;
+  height: 2em;
+  margin-right: 10px;
+  
+}
+
+#header-banner h2 {
+  margin-left: 10px;
+  display: inline; /* Make sure the text and image are on the same line */
+  line-height: 1em; /* Set the line height to match the image height */
+}
+
+.clearfix::after
+{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+#main
+{
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: antiquewhite;
+}
+
+#sidebar
+{
+  width: 10%;
+  min-height: 800px;
+  background-color:darkblue;
+  line-height: 40px;
+  text-align: left;
+  text-indent: 30px;
+  padding-left: 0px;
+  padding-top: 30px;
+  color:white;
+  display: inline-block;
+}
+
+#sidebar a
+{
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: small;
+  margin-bottom: 1px;
+  transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
+}
+
+#sidebar a:hover {
+  background-color: #0057b3; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+}
+
+#bodyarea
+{
+    width: 90%;
+    min-height: 800px;
+    background-color: rgb(231, 237, 242);
+    float: right;
+    text-align: left;
+    line-height: 400px;
+}
+
+#info-area
+{
+    width: 95%;
+    min-height: 150px;
+    background-color: whitesmoke;
+    text-align: left;
+    line-height: 2;
+    margin: 10px 0px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: left;
+    margin-left: 10px;
+}
+
+#form1area
+{
+    width: 48%;
+    min-height: 100px;
+    background-color: whitesmoke;
+    text-align: left;
+    line-height: 2;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#form2area
+{
+    width: 48%;
+    min-height: 150px;
+    background-color: whitesmoke;
+    text-align: left;
+    line-height: 2;
+    margin: 10px 10px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    float: right;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#jobdet-area
+{
+    width: 100%;
+    min-height: 400px;
+    background-color: rgb(231, 237, 242);
+    text-align: left;
+    line-height: 2;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: right;
+    position: relative;
+    height: 400px; /* Set the desired height for the container */
+    overflow: auto; /* Enable both horizontal and vertical scrollbars */
+}
+
+#pynext-area
+{
+    width: 100%;
+    min-height: 50px;
+    background-color: rgb(231, 237, 242);
+    text-align: left;
+    line-height: 2;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: right;
+    position: relative;
+    
+}
+
+
+#joblist
+{
+    width: 100%;
+    background-color: rgb(231, 237, 242);
+    text-align: center;
+    line-height: 2;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: right;
+}
+
+#pyinfo-area
+{
+    width: 90%;
+    min-height: 150px;
+    background-color: whitesmoke;
+    text-align: left;
+    line-height: 2;
+    margin: 20px 0px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: left;
+    margin-left: 20px;
+    
+}
+
+.genpy-area {
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* height: 300px; */
+  /* border: 1px solid #ccc; */
+  width: 100%;
+  min-height: 50px;
+  background-color: rgb(231, 237, 242);
+  text-align: left;
+  line-height: 2;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  float: right;
+  position: relative;
+}
+
+.bottom-center-button {
+  display: flex;
+  padding: 10px 20px;
+  position: relative;
+  /* bottom: 10px; Adjust the distance from the bottom as needed */
+  /* right: 10px; Adjust the distance from the right as needed */
+}
+
+#logdet-area
+{
+    width: 100%;
+    min-height: 290px;
+    background-color: rgb(231, 237, 242);
+    text-align: left;
+    line-height: 2;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: right;
+}
+
+#temp-area
+{
+    width: 50%;
+    min-height: 290px;
+    background-color: rgb(231, 237, 242);
+    text-align: left;
+    line-height: 2;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    float: left;
+    
+}
+
+  /* Apply styles to the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* Apply styles to table header */
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    font-size: small;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  /* Apply styles to table header */
+  tbody {
+    background-color: #dbece9;
+    font-weight: normal;
+    font-size: small;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  /* Apply styles to table cells */
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  /* Column level width */
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 25%;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 20%;
+  }
+  
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: 20%;
+  }
+
+  th:nth-child(7),
+  td:nth-child(7) {
+    width: 5%;
+  }
+
+.d-none {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    width: 300px;
+  }
+
+.full-width {
+  display: inline-block;
+  width: 100%;
+}
+
+input:required {
+    background-color: lightyellow;
+}
+
+.sch-pick-no {
+    width: 50px;
+}
+
+.delete-icon:hover {
+  cursor: pointer;
+  cursor: arrow;
+}
+
+.pyNxtContainer {
+  display: flex;
+  position: relative;
+  /* Set a height for the container to contain the button */
+}
+
+.bottom-right-button {
+  position: absolute;
+  bottom: 10px; /* Adjust the distance from the bottom as needed */
+  right: 10px; /* Adjust the distance from the right as needed */
+  /* padding: 10px 20px; */
+}
+
+.leftbar-btn {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  font-size: small;
+  text-align: center;
+  padding: 8px;
+  width: 80%;
+  border: 1px solid #ddd;
+}
